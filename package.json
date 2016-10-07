@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run serve",
-    "heroku": "npm run build;node server.js",
+    "heroku": "node server.js",
     "express": "node server.js",
     "lint": "eslint ./src/ --ext=js,vue",
     "lint:fix": "eslint ./src --fix --ext=js,vue",
@@ -13,7 +13,8 @@
     "build": "webpack --progress --hide-modules --config webpack.config.js",
     "serve": "webpack-dev-server --inline --hot --config webpack.config.js -d --open --history-api-fallback",
     "test": "npm run lint",
-    "test:safe": "npm run lint; exit 0"
+    "test:safe": "npm run lint; exit 0",
+	"postinstall": "npm run build"
   },
   "author": "potato4d",
   "license": "MIT",
