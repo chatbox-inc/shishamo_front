@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run serve",
-    "heroku": "npm run build;node server.js",
+    "heroku": "node server.js",
     "express": "node server.js",
     "lint": "eslint ./src/ --ext=js,vue",
     "lint:fix": "eslint ./src --fix --ext=js,vue",
