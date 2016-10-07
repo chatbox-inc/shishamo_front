@@ -9,7 +9,7 @@ const VueResource = require("vue-resource");
 Vue.use(VueRouter);
 Vue.use(VueResource);
 
-Vue.http.options.root = "http://localhost:8000/api";
+Vue.http.options.root = "http://shishamo-backend.herokuapp.com/api";
 if("token" in localStorage) Vue.http.headers.common["Authorization"] = localStorage.token;
 
 const App = Vue.extend(require("./App.vue"));
