@@ -31,7 +31,7 @@
 	width: 100vw;
 	height: 100vh;
 	color: #fff;
-	background: #3E6185;
+	background: linear-gradient(hsl(210, 36%, 43%), hsl(210, 36%, 33%));
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -44,7 +44,7 @@
 }
 
 h1{
-	margin: 10px auto;
+	margin: 10px auto 30px;
 	text-align: center;
 }
 

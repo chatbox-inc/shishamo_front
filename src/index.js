@@ -1,3 +1,8 @@
+if(location.pathname !== "/" && !( "token" in localStorage)){
+	location.href = "/";
+	document.querySelector("body").style.display = "none";
+}
+
 const Vue = require("vue");
 const VueRouter = require("vue-router");
 const VueResource = require("vue-resource");
@@ -50,3 +55,9 @@ router.map({
 });
 
 router.start(App, "#app");
+
+router.afterEach(function (transition) {
+	if(transition.to.path !== "" && !( "token" in localStorage)){
+		location.href = "/";
+	}
+});
