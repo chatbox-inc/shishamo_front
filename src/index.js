@@ -22,7 +22,7 @@ const router = new VueRouter({
 // Components require here.
 
 const ApplicationStore = require("./stores/ApplicationStore.js");
-ApplicationStore.root = API_ROOT;
+ApplicationStore.root = "https://shishamo-backend.herokuapp.com/api";
 
 // Pages require here.
 

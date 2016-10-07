@@ -394,7 +394,7 @@ export default {
 			console.log("FormData:", form);
 
 			$.ajax({
-				url: `buckets/${this.$route.query.name}/objects`,
+				url: `https://shishamo-backend.herokuapp.com/api/buckets/${this.$route.query.name}/objects`,
 				type: "POST",
 				data: form,
 				processData: false,  // jQuery がデータを処理しないよう指定
