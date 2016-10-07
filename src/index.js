@@ -6,10 +6,11 @@ if(location.pathname !== "/" && !( "token" in localStorage)){
 const Vue = require("vue");
 const VueRouter = require("vue-router");
 const VueResource = require("vue-resource");
+const API_ROOT = "http://localhost:8000/api";
 Vue.use(VueRouter);
 Vue.use(VueResource);
 
-Vue.http.options.root = "https://shishamo-backend.herokuapp.com/api";
+Vue.http.options.root = API_ROOT;
 if("token" in localStorage) Vue.http.headers.common["Authorization"] = localStorage.token;
 
 const App = Vue.extend(require("./App.vue"));
@@ -19,6 +20,9 @@ const router = new VueRouter({
 });
 
 // Components require here.
+
+const ApplicationStore = require("./stores/ApplicationStore.js");
+ApplicationStore.root = API_ROOT;
 
 // Pages require here.
 

@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col col-sm-3">
-				<h3>Buckets <i class="glyphicon glyphicon-info-sign"></i></h3>
+				<h3>Buckets</h3>
 				<div class="list-group" style="margin-top: 50px;">
 					<a href="#" class="list-group-item" v-if="buckets.length == 0">Loading...</a>
 					<a href="#" class="list-group-item {{bucket.Name == this.$route.query.name ? 'active' : ''}}" v-on:click="execReflesh" v-for="bucket in buckets">{{bucket.Name}}</a>
@@ -160,6 +160,26 @@ export default {
 	route: {
 		activate: function(){
 			this.reflesh();
+
+			this.$http.get(
+				"users/me"
+			).then(
+				(res)=>{
+					const myBuckets = JSON.parse(res.body.user.buckets || "[]");
+					console.log(myBuckets);
+					myBuckets.map((bName)=>{
+						this.showBuckets.push(
+							this.buckets.find((bucket)=>{
+								return bucket.Name == bName;
+							})
+						);
+					});
+				},
+				(err)=>{
+					console.log("Error:", err);
+					console.log("プロフィールの取得に失敗しました。");
+				}
+			);
 		}
 	},
 

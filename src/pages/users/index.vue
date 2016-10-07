@@ -12,7 +12,7 @@
 
 			<div class="col col-sm-4" v-if="isCreateMode">
 				<h3>新規作成</h3>
-				<form v-on:submit.prevent="makeUser">
+				<form id="makeUser" v-on:submit.prevent="makeUser">
 					<div class="form-group">
 						<label for="exampleInputEmail1">メールアドレス</label>
 						<input type="email" class="form-control" placeholder="user@example.com" v-model="formData.email">
@@ -52,7 +52,28 @@
 					<span v-if="user.authority == 2">管理者ユーザー</span>
 				</p>
 
-				<button type="button" class="btn btn-danger btn-sm" v-on:click="deleteUser">- ユーザーを削除</button>
+				<small>閲覧可能バケット</small>
+				<p>
+					<form id="allowBuckets">
+						<ul style="list-style:none;padding-left:0;">
+							<li v-for="bucket in buckets">
+								<label style="font-weight:normal;">
+									<span v-if="bucket.Name == userBuckets[bucket.Name]">
+										<input type="checkbox" name="buckets[]" v-bind:data-name="bucket.Name" checked="">　{{bucket.Name}}
+									</span>
+
+									<span v-else>
+										<input type="checkbox" name="buckets[]" v-bind:data-name="bucket.Name" v-else>　{{bucket.Name}}
+									</span>
+								</label>
+							</li>
+						</ul>
+					</form>
+				</p>
+
+				<p>
+					<button type="button" class="btn btn-primary btn-sm" v-on:click="updateUser">設定を適用</button> <button type="button" class="btn btn-danger btn-sm" v-on:click="deleteUser">ユーザー削除</button>
+				</p>
 
 			</div>
 		</div>
@@ -73,6 +94,7 @@ export default {
 		return {
 			user    : {id: null, email: null, authority: null},
 			users   : [],
+			userBuckets: {},
 			buckets : [],
 			isDetailMode : false,
 			isCreateMode : false,
@@ -100,6 +122,21 @@ export default {
 					alert(`エラーが発生しました。\n${err.res.body.message}`);
 				}
 			);
+
+			this.buckets = this.stores.BucketsStore.data;
+			if(this.stores.BucketsStore.data.length == 0){
+				this.$http.get("buckets").then(
+					(res) => {
+						console.log("Data", res);
+						this.buckets = res.body.buckets;
+						this.stores.BucketsStore.data = res.body.buckets;
+					},
+					(err) => {
+						console.log("Error", err);
+						alert(`エラーが発生しました。\n${err.res.body.message}`);
+					}
+				);
+			}
 		}
 	},
 	methods: {
@@ -138,6 +175,13 @@ export default {
 				return u.id == e.target.getAttribute("data-id");
 			});
 
+			this.userBuckets = {};
+
+			JSON.parse(this.user.buckets || "[]").map((bucket)=>{
+				this.userBuckets[bucket] = bucket;
+			})
+			console.log(this.userBuckets);
+
 			this.isDetailMode = true;
 			this.isCreateMode = false;
 		},
@@ -146,6 +190,32 @@ export default {
 			this.$http.post(
 				"users",
 				this.formData
+			).then(
+				()=>{
+					this.reflesh();
+				},
+				()=>{
+					this.reflesh();
+				}
+			);
+
+		},
+
+		updateUser: function(e){
+			e.preventDefault();
+
+			const $ = require("jquery");
+			let checks = [];
+			$("#allowBuckets [type='checkbox']:checked").each(function(){
+				checks.push(this.getAttribute("data-name"));
+			});
+			console.log(checks);
+
+			this.$http.put(
+				`users/${this.user.id}`,
+				{
+					buckets: JSON.stringify(checks)
+				}
 			).then(
 				()=>{
 					this.reflesh();
