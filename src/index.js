@@ -6,7 +6,7 @@ if(location.pathname !== "/" && !( "token" in localStorage)){
 const Vue = require("vue");
 const VueRouter = require("vue-router");
 const VueResource = require("vue-resource");
-const API_ROOT = "http://localhost:8000/api";
+const API_ROOT = "https://shishamo-backend.herokuapp.com/api";
 Vue.use(VueRouter);
 Vue.use(VueResource);
 
