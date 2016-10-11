@@ -78,9 +78,10 @@ export default {
 			).then(
 				(res)=>{
 					console.log("OK:", res.body);
+
+					localStorage.email = this.email;
 					localStorage.token = res.body.user.token;
 					localStorage.authority = res.body.user.authority;
-
 
 					location.href = "/buckets/";
 				},
