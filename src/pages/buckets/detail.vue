@@ -150,7 +150,7 @@ export default {
 			isSelectFile: false,
 			selectedFilePath: "",
 			selectedFileName: "",
-			authority : localStorage.authority,
+			authority : window.authority,
 			isSelectedDirectory: false,
 			stores: {
 				BucketsStore: BucketsStore

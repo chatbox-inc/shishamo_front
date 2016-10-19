@@ -1,4 +1,5 @@
 module.exports = {
 	isLoading: false,
-	root: ""
+	root: "",
+	authority: 0
 };

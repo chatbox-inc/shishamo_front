@@ -1,6 +1,16 @@
 if(location.pathname !== "/" && !( "token" in localStorage)){
 	location.href = "/";
 	document.querySelector("body").style.display = "none";
+}else{
+	if("authority" in localStorage){
+		window.authority = localStorage.authority;
+		delete localStorage.authority;
+	}
+	window.addEventListener("beforeunload", (e) => {
+		if(window.authority !== undefined){
+			localStorage.authority = window.authority;
+		}
+	});
 }
 
 const Vue = require("vue");

@@ -58,7 +58,7 @@ export default {
 	data: function () {
 		return {
 			email    : localStorage.email,
-			authority: localStorage.authority
+			authority: window.authority
 		};
 	},
 	computed: {},
