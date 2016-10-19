@@ -81,7 +81,7 @@ export default {
 
 					localStorage.email = this.email;
 					localStorage.token = res.body.user.token;
-					localStorage.authority = res.body.user.authority;
+					localStorage.view_mode = res.body.user.authority;
 
 					location.href = "/buckets/";
 				},

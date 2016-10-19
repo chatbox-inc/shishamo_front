@@ -3,12 +3,12 @@ if(location.pathname !== "/" && !( "token" in localStorage)){
 	document.querySelector("body").style.display = "none";
 }else{
 	if("authority" in localStorage){
-		window.authority = localStorage.authority;
-		delete localStorage.authority;
+		window.authority = localStorage.view_mode;
+		delete localStorage.view_mode;
 	}
 	window.addEventListener("beforeunload", (e) => {
 		if(window.authority !== undefined){
-			localStorage.authority = window.authority;
+			localStorage.view_mode = window.authority;
 		}
 	});
 }
