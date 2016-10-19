@@ -1,4 +1,4 @@
-if(location.pathname !== "/" && !( "token" in localStorage)){
+if(location.pathname !== "/" && ( !( "token" in localStorage) || !( "view_mode" in localStorage) ) ){
 	location.href = "/";
 	document.querySelector("body").style.display = "none";
 }else{
